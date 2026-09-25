@@ -1,0 +1,581 @@
+{
+  "model_version": "1.0.0",
+  "created": "2026-09-23",
+  "extractor_version": "1.0.0",
+  "essentia_version": "2.1b6.dev1389",
+  "sklearn_version": "1.9.1",
+  "description": "One HistGradientBoostingRegressor per perceptual descriptor, predicting Echo Nest-style values in [0, 1] from the SonicLens low-level descriptor vector of a centred 30 s window.",
+  "training_data": {
+    "dataset": "FMA: A Dataset for Music Analysis (fma_large 30 s clips + fma_metadata)",
+    "citation": "Defferrard, M., Benzi, K., Vandergheynst, P., Bresson, X. (2017). FMA: A Dataset for Music Analysis. 18th International Society for Music Information Retrieval Conference (ISMIR). arXiv:1612.01840",
+    "metadata_license": "CC BY 4.0",
+    "targets_source": "Echo Nest audio features distributed in FMA's echonest.csv",
+    "n_tracks_with_targets": 13129,
+    "n_tracks_used": 13103,
+    "n_tracks_without_features": 26,
+    "extraction_skips_by_reason": {
+      "AudioDecodeError": 6,
+      "SilentAudioError": 1,
+      "truncated": 19
+    },
+    "n_dev": 11093,
+    "n_test": 2010,
+    "n_artists_dev": 2458,
+    "n_artists_test": 416
+  },
+  "features": {
+    "n": 257,
+    "names_file": "feature_names.json",
+    "window": "centred 30 s (FMA clip rule: start = duration // 2 - 15)"
+  },
+  "evaluation": {
+    "cv": "5-fold cross-validation grouped by artist on the development set (model selection)",
+    "test": "held-out artist-grouped test set (~15% of artists), used once after model selection",
+    "hyperparameter_search": "16 random configurations, best by pooled out-of-fold R2",
+    "metrics": [
+      "mae",
+      "rmse",
+      "r2",
+      "spearman"
+    ]
+  },
+  "targets": {
+    "energy": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 100,
+        "max_leaf_nodes": 31,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.03,
+        "l2_regularization": 0.1
+      },
+      "cv": {
+        "mae": 0.10518020968652843,
+        "rmse": 0.1393818827314796,
+        "r2": 0.7459860797174609,
+        "spearman": 0.853802544785688,
+        "r2_folds": [
+          0.7253125412578026,
+          0.7604211159239739,
+          0.7420956937392831,
+          0.7330582507590925,
+          0.7620891684010204
+        ]
+      },
+      "test": {
+        "mae": 0.10434158983028453,
+        "rmse": 0.13849118481721603,
+        "r2": 0.760483715089642,
+        "spearman": 0.8606967369688344
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.2346594895399644,
+            "rmse": 0.2767449204948661,
+            "r2": -0.0013921458727059743,
+            "spearman": -0.047468439423487364,
+            "r2_folds": [
+              -0.00045012898345464514,
+              -0.004623975122529211,
+              -0.006399257754286625,
+              -0.004163388637514975,
+              -0.002717187015557121
+            ]
+          },
+          "test": {
+            "mae": 0.24129828144534562,
+            "rmse": 0.28306105355532796,
+            "r2": -0.0005781685772783263,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.1087674855457999,
+            "rmse": 0.1435095572479488,
+            "r2": 0.7307185028748512,
+            "spearman": 0.8467805157639151,
+            "r2_folds": [
+              0.7110557288095432,
+              0.7515269569910253,
+              0.7241106845753873,
+              0.7221553514282155,
+              0.73616205500711
+            ]
+          },
+          "test": {
+            "mae": 0.11015846439828822,
+            "rmse": 0.14608690921393722,
+            "r2": 0.7334900751877729,
+            "spearman": 0.8473778751595411
+          }
+        }
+      }
+    },
+    "danceability": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 100,
+        "max_leaf_nodes": 31,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.03,
+        "l2_regularization": 0.1
+      },
+      "cv": {
+        "mae": 0.09007649809755686,
+        "rmse": 0.11378602772176119,
+        "r2": 0.6444377045178671,
+        "spearman": 0.7992442491024875,
+        "r2_folds": [
+          0.6491788321062275,
+          0.6583880993063271,
+          0.6472263405129578,
+          0.6180996955709324,
+          0.6425305847252432
+        ]
+      },
+      "test": {
+        "mae": 0.08687832765594065,
+        "rmse": 0.10996343874565165,
+        "r2": 0.6526111312962093,
+        "spearman": 0.7984666350332859
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.1586934425601001,
+            "rmse": 0.190945280704178,
+            "r2": -0.0012803345292529134,
+            "spearman": -0.044576660088530055,
+            "r2_folds": [
+              -0.0051543841035210924,
+              -0.0004176883288713462,
+              -0.010988710309806748,
+              -0.0019655902038686612,
+              -0.00023500036171153482
+            ]
+          },
+          "test": {
+            "mae": 0.1549036072800208,
+            "rmse": 0.18663854430492843,
+            "r2": -0.0007415928239518088,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.09741621278721209,
+            "rmse": 0.12268158949991212,
+            "r2": 0.5866702961986019,
+            "spearman": 0.7709505281758209,
+            "r2_folds": [
+              0.5816786245083705,
+              0.6023619557535783,
+              0.6088170736421025,
+              0.5612675006039807,
+              0.5701360480572768
+            ]
+          },
+          "test": {
+            "mae": 0.09430106089966127,
+            "rmse": 0.1189958978907653,
+            "r2": 0.5931978364667618,
+            "spearman": 0.7652870479072703
+          }
+        }
+      }
+    },
+    "valence": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 100,
+        "max_leaf_nodes": 31,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.03,
+        "l2_regularization": 0.1
+      },
+      "cv": {
+        "mae": 0.16880565363792588,
+        "rmse": 0.20996531349656805,
+        "r2": 0.41724805298631096,
+        "spearman": 0.6477175903789552,
+        "r2_folds": [
+          0.478391855543959,
+          0.38127099898483474,
+          0.41492769487143144,
+          0.3972423705901603,
+          0.4161573967537501
+        ]
+      },
+      "test": {
+        "mae": 0.16293812417669562,
+        "rmse": 0.2031187304763727,
+        "r2": 0.48125559832087994,
+        "spearman": 0.6998414571876423
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.23614228512510116,
+            "rmse": 0.2751570202243228,
+            "r2": -0.0008058127057475328,
+            "spearman": -0.03621886654541398,
+            "r2_folds": [
+              -0.0019164143847714143,
+              -0.002447753100566885,
+              -7.629481644233493e-07,
+              -0.003847694821229597,
+              -0.0027772232615643766
+            ]
+          },
+          "test": {
+            "mae": 0.24378820667220835,
+            "rmse": 0.2820686747625966,
+            "r2": -0.0003758342816215787,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.18224944054193243,
+            "rmse": 0.2232114872908299,
+            "r2": 0.3414000305404721,
+            "spearman": 0.5950373025946527,
+            "r2_folds": [
+              0.38318717292235593,
+              0.3242098249812646,
+              0.3373995716510254,
+              0.32674403733313884,
+              0.33330254128448167
+            ]
+          },
+          "test": {
+            "mae": 0.17724644817002608,
+            "rmse": 0.21707671517464963,
+            "r2": 0.4075114550218294,
+            "spearman": 0.6520012264959993
+          }
+        }
+      }
+    },
+    "acousticness": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 50,
+        "max_leaf_nodes": 31,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.05,
+        "l2_regularization": 1.0
+      },
+      "cv": {
+        "mae": 0.16331860604701307,
+        "rmse": 0.22435544143998282,
+        "r2": 0.6580417299333685,
+        "spearman": 0.8324735611735382,
+        "r2_folds": [
+          0.662525482969774,
+          0.6712480884479071,
+          0.6552531007744349,
+          0.6559553349426142,
+          0.6395827198562674
+        ]
+      },
+      "test": {
+        "mae": 0.17088522719331647,
+        "rmse": 0.23442471851621474,
+        "r2": 0.6229766466839827,
+        "spearman": 0.8229193042792471
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.35323459858883294,
+            "rmse": 0.3838712853075386,
+            "r2": -0.0010854529898356446,
+            "spearman": -0.03886002985339757,
+            "r2_folds": [
+              -0.00010088077454195599,
+              -0.006073495454117062,
+              -0.0039014655841900225,
+              -0.0022103728241231746,
+              -0.0013084195328247894
+            ]
+          },
+          "test": {
+            "mae": 0.35381311126675263,
+            "rmse": 0.38298517842227064,
+            "r2": -0.006295149836053282,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.18210682765143613,
+            "rmse": 0.23664512117791855,
+            "r2": 0.6195522610863977,
+            "spearman": 0.817972081479883,
+            "r2_folds": [
+              0.6195553845627344,
+              0.6384328537041681,
+              0.609702998824865,
+              0.6264153777041073,
+              0.5959739662889407
+            ]
+          },
+          "test": {
+            "mae": 0.1869985326355256,
+            "rmse": 0.24302605440234384,
+            "r2": 0.5948021638131535,
+            "spearman": 0.8145582295984136
+          }
+        }
+      }
+    },
+    "instrumentalness": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 100,
+        "max_leaf_nodes": 31,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.03,
+        "l2_regularization": 0.1
+      },
+      "cv": {
+        "mae": 0.21559863033608304,
+        "rmse": 0.28160986906878266,
+        "r2": 0.3895524580562064,
+        "spearman": 0.6285764815168395,
+        "r2_folds": [
+          0.43374595134428884,
+          0.33835934824363023,
+          0.36520380237924055,
+          0.42909331781641924,
+          0.3846941770102891
+        ]
+      },
+      "test": {
+        "mae": 0.20783207566168282,
+        "rmse": 0.27579246614151426,
+        "r2": 0.43674308780400595,
+        "spearman": 0.6580963107449229
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.3142070998699927,
+            "rmse": 0.36051501268946745,
+            "r2": -0.00045904953635211854,
+            "spearman": -0.03344608822461628,
+            "r2_folds": [
+              -0.00011393220971789297,
+              -0.0029401800020338875,
+              -9.683721922493227e-05,
+              -0.002256404951340496,
+              -0.00012345797962809435
+            ]
+          },
+          "test": {
+            "mae": 0.32032471230763365,
+            "rmse": 0.36758731146673657,
+            "r2": -0.0006052034108543491,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.23617560680036706,
+            "rmse": 0.29392909451604793,
+            "r2": 0.3349753221003259,
+            "spearman": 0.5944535030121798,
+            "r2_folds": [
+              0.3782246327706704,
+              0.282956338196268,
+              0.30348708334338625,
+              0.37536753489709296,
+              0.3383090761664094
+            ]
+          },
+          "test": {
+            "mae": 0.22230404780625357,
+            "rmse": 0.2831444467256352,
+            "r2": 0.40631260262659885,
+            "spearman": 0.6416962698224652
+          }
+        }
+      }
+    },
+    "liveness": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 50,
+        "max_leaf_nodes": 15,
+        "max_iter": 200,
+        "max_features": 0.5,
+        "learning_rate": 0.03,
+        "l2_regularization": 1.0
+      },
+      "cv": {
+        "mae": 0.10115452912561307,
+        "rmse": 0.14898656588742215,
+        "r2": 0.12383118591803666,
+        "spearman": 0.24603163731828762,
+        "r2_folds": [
+          0.0945125982809768,
+          0.09667582696584998,
+          0.13413539523550821,
+          0.14899690227594897,
+          0.12420169158754768
+        ]
+      },
+      "test": {
+        "mae": 0.09548585027895296,
+        "rmse": 0.14135152907242574,
+        "r2": 0.12157319581218895,
+        "spearman": 0.27779975008961744
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.11179731687868563,
+            "rmse": 0.15937244976997209,
+            "r2": -0.0025823807232940865,
+            "spearman": -0.0596753006956484,
+            "r2_folds": [
+              -0.008723816487548497,
+              -0.015133009070096515,
+              -0.007093896289224411,
+              -0.003984863339278277,
+              -4.3756992851307075e-07
+            ]
+          },
+          "test": {
+            "mae": 0.10664527888449417,
+            "rmse": 0.15083980050966364,
+            "r2": -0.0003142517516081522,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 1000.0,
+          "cv": {
+            "mae": 0.1034252797176962,
+            "rmse": 0.1514044843640383,
+            "r2": 0.09516154757065887,
+            "spearman": 0.22631655288542651,
+            "r2_folds": [
+              0.0855771959515027,
+              0.0719893053188102,
+              0.0986205019998393,
+              0.1044691448637245,
+              0.09355343560259866
+            ]
+          },
+          "test": {
+            "mae": 0.09752040541264811,
+            "rmse": 0.14330070255202987,
+            "r2": 0.09717994707260247,
+            "spearman": 0.28149703055340747
+          }
+        }
+      }
+    },
+    "speechiness": {
+      "model": "HistGradientBoostingRegressor",
+      "hyperparameters": {
+        "min_samples_leaf": 20,
+        "max_leaf_nodes": 15,
+        "max_iter": 400,
+        "max_features": 0.5,
+        "learning_rate": 0.05,
+        "l2_regularization": 0.1
+      },
+      "cv": {
+        "mae": 0.05118975274335411,
+        "rmse": 0.09473797335153168,
+        "r2": 0.5239201965073073,
+        "spearman": 0.6400523709840105,
+        "r2_folds": [
+          0.5546413235210669,
+          0.5092139058296512,
+          0.527610868145316,
+          0.5674875419439342,
+          0.42662779252023186
+        ]
+      },
+      "test": {
+        "mae": 0.046876308557754195,
+        "rmse": 0.08710930530185669,
+        "r2": 0.6029652637401528,
+        "spearman": 0.6169860430455758
+      },
+      "baselines": {
+        "mean": {
+          "cv": {
+            "mae": 0.0814046534259185,
+            "rmse": 0.13743538232289698,
+            "r2": -0.0019099458710238881,
+            "spearman": -0.040780159063653766,
+            "r2_folds": [
+              -0.010822987347456792,
+              -0.01084910536680228,
+              -0.0010346883479261937,
+              -8.389612961723358e-05,
+              -0.0032341364036680975
+            ]
+          },
+          "test": {
+            "mae": 0.07971728430475608,
+            "rmse": 0.1383161445222378,
+            "r2": -0.0010255293099923346,
+            "spearman": 0.0
+          }
+        },
+        "ridge": {
+          "alpha": 100.0,
+          "cv": {
+            "mae": 0.06577166853836566,
+            "rmse": 0.10647178084732069,
+            "r2": 0.3986869707041193,
+            "spearman": 0.5637807962942333,
+            "r2_folds": [
+              0.42214083706522587,
+              0.386080027008325,
+              0.42720006569778324,
+              0.4297546547701917,
+              0.2897177849540503
+            ]
+          },
+          "test": {
+            "mae": 0.06584549797894197,
+            "rmse": 0.1074383393421364,
+            "r2": 0.39602636940868574,
+            "spearman": 0.5214132887825489
+          }
+        }
+      }
+    }
+  },
+  "tempo_validation": {
+    "description": "SonicLens DSP tempo (RhythmExtractor2013 on the 30 s clip) vs. Echo Nest tempo (full track); tolerance 4%, accuracy 2 also accepts double/half tempo.",
+    "accuracy_1": 0.564374570708998,
+    "accuracy_2": 0.69548958253835,
+    "n": 13103
+  },
+  "limitations": [
+    "Echo Nest labels were computed on full tracks, while the model sees 30 s clips (the centre of the track), so parts of a track outside the window cannot influence predictions.",
+    "FMA consists mostly of independent, Creative Commons-licensed music; genre and production coverage differs from mainstream commercial catalogues, so accuracy on such music is unknown.",
+    "Predictions approximate Echo Nest-style descriptors as distributed in FMA; they are not claimed to match the descriptors of any other service.",
+    "Liveness and instrumentalness are noisy targets with skewed distributions; see the per-target test metrics before relying on them."
+  ]
+}

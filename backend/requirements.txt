@@ -1,0 +1,28 @@
+# Python 3.11. Essentia is pinned: 2.1b6.dev1389 is the newest release with a
+# cp311 macOS arm64 wheel (later releases only ship cp314 wheels).
+essentia==2.1b6.dev1389
+numpy>=2.0,<3
+scipy>=1.13
+
+# API
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pydantic>=2.7
+sqlalchemy>=2.0
+
+# Training / evaluation
+pandas>=2.2
+pyarrow>=16
+scikit-learn>=1.5
+joblib>=1.4
+matplotlib>=3.9
+remotezip>=0.12
+requests>=2.32
+tqdm>=4.66
+# Only for the evaluation experiment that recomputes FMA's librosa features on 30 s clips
+librosa==0.11.0
+
+# Tests
+pytest>=8
+httpx>=0.27

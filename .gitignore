@@ -1,0 +1,31 @@
+# Data (FMA metadata, audio clips, feature tables)
+/data/
+
+# Enviorment
+*.env
+!*.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / client
+node_modules/
+client/dist/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Additional folders
+/thesis/
+.claude/

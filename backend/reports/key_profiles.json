@@ -1,0 +1,42 @@
+{
+  "n_pieces": 864,
+  "method": "Compare Essentia KeyExtractor profiles on synthesised tonal audio in all 24 keys. FMA has no key annotations, so this uses synthetic cadences with known keys. Each test piece is a looped four-chord progression of harmonic complex tones with a scale melody on top. Progressions include classical cadences (I-IV-V-I, i-iv-V-i) and the pop/electronic patterns that make key finding hard (I-V-vi-IV, vi-IV-I-V, Aeolian i-VI-III-VII and i-VII-VI-VII with no leading tone). Each is rendered with several timbres, with and without detuning (+30 cents) and noise percussion. The score is the MIREX weighted key score (correct 1.0, fifth 0.5, relative 0.3, parallel 0.2).",
+  "profiles": {
+    "edma": {
+      "accuracy": 0.8171296296296297,
+      "mirex_weighted": 0.8644675925925926,
+      "mirex_by_progression": {
+        "I-IV-V-I": 1.0,
+        "I-V-vi-IV": 0.9916666666666667,
+        "vi-IV-I-V": 0.9965277777777778,
+        "i-iv-V-i": 1.0,
+        "i-VI-III-VII": 0.367361111111111,
+        "i-VII-VI-VII": 0.83125
+      }
+    },
+    "temperley": {
+      "accuracy": 0.6145833333333334,
+      "mirex_weighted": 0.7145833333333333,
+      "mirex_by_progression": {
+        "I-IV-V-I": 1.0,
+        "I-V-vi-IV": 0.9791666666666666,
+        "vi-IV-I-V": 0.8645833333333334,
+        "i-iv-V-i": 1.0,
+        "i-VI-III-VII": 0.16875,
+        "i-VII-VI-VII": 0.27499999999999997
+      }
+    },
+    "krumhansl": {
+      "accuracy": 0.7199074074074074,
+      "mirex_weighted": 0.8027777777777777,
+      "mirex_by_progression": {
+        "I-IV-V-I": 1.0,
+        "I-V-vi-IV": 1.0,
+        "vi-IV-I-V": 0.9965277777777778,
+        "i-iv-V-i": 1.0,
+        "i-VI-III-VII": 0.48749999999999993,
+        "i-VII-VI-VII": 0.3326388888888889
+      }
+    }
+  }
+}
