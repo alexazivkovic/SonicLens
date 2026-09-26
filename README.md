@@ -70,7 +70,7 @@ npm install
 
 ## Running
 
-Start the API and the client in two terminals:
+Start the backend and the client in two terminals:
 
 ```bash
 cd backend && .venv/bin/uvicorn app.main:app --port 8000
@@ -79,6 +79,18 @@ cd backend && .venv/bin/uvicorn app.main:app --port 8000
 ```bash
 cd client && npm run dev
 ```
+
+Or use run.sh for starting both in one command:
+
+```bash
+./run.sh
+```
+
+Use:
+```bash
+chmod +x run.sh
+```
+if needed to make it executable.
 
 Open http://localhost:5173. The API docs are at http://127.0.0.1:8000/docs.
 
